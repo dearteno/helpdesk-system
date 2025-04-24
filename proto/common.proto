@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package helpdesk.common;
+option go_package = "github.com/dearteno/helpdesk-system/proto/common";
+
+message Empty {}
+
+message Status {
+  int32 code = 1;
+  string message = 2;
+}
+
+message Pagination {
+  int32 page = 1;
+  int32 per_page = 2;
+  int32 total = 3;
+  int32 total_pages = 4;
+}
+
+message PaginationRequest {
+  int32 page = 1;
+  int32 per_page = 2;
+}

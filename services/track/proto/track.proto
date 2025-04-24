@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package track.service;
+option go_package = "github.com/dearteno/helpdesk-system/services/track/proto";
+
+import "proto/common.proto";
+
+// Track service definition based on UML
+service TrackService {
+  rpc CreateTrack(CreateTrackRequest) returns (TrackResponse);
+  rpc GetTrack(GetTrackRequest) returns (TrackResponse);
+  rpc UpdateTrack(UpdateTrackRequest) returns (TrackResponse);
+  rpc DeleteTrack(DeleteTrackRequest) returns (helpdesk.common.Status);
+  rpc ListTracks(ListTracksRequest) returns (ListTracksResponse);
+  rpc SearchTracks(SearchTracksRequest) returns (ListTracksResponse);
+}
+
+// Track entity based on UML diagram
+message Track {
+  string id = 1;
+  string issue_id = 2;
+  string date = 3;
+  string place = 4;
+  string type = 5;
+  string description = 6;
+  string status = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+// Request and response messages
+message CreateTrackRequest {
+  string issue_id = 1;
+  string place = 2;
+  string type = 3;
+  string description = 4;
+}
+
+message GetTrackRequest {
+  string id = 1;
+}
+
+message UpdateTrackRequest {
+  string id = 1;
+  string issue_id = 2;
+  string place = 3;
+  string type = 4;
+  string description = 5;
+  string status = 6;
+}
+
+message DeleteTrackRequest {
+  string id = 1;
+}
+
+message TrackResponse {
+  Track track = 1;
+  helpdesk.common.Status status = 2;
+}
+
+message ListTracksRequest {
+  helpdesk.common.PaginationRequest pagination = 1;
+  string issue_id = 2;
+  string status = 3;
+}
+
+message ListTracksResponse {
+  repeated Track tracks = 1;
+  helpdesk.common.Pagination pagination = 2;
+  helpdesk.common.Status status = 3;
+}
+
+message SearchTracksRequest {
+  string query = 1;
+  helpdesk.common.PaginationRequest pagination = 2;
+}

@@ -1,0 +1,103 @@
+# Node.js / npm
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+.npm
+package-lock.json
+yarn.lock
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Development environments
+.idea/
+.vscode/
+*.code-workspace
+.history/
+*.sublime-project
+*.sublime-workspace
+
+# Build artifacts and directories
+/dist
+/build
+/out
+/.next
+/.nuxt
+/.output
+/coverage
+/storybook-static
+
+# Testing
+/coverage
+/.nyc_output
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*
+!.env.example
+.secret
+.secrets
+*.pem
+*.key
+
+# Logs and temporary files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+tmp/
+temp/
+.cache/
+
+# OS specific files
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+*.lnk
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Backend specific
+*.sqlite
+*.sqlite3
+*.db
+
+# Frontend specific
+.sass-cache/
+.eslintcache
+
+# Miscellaneous
+.vercel
+.netlify
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vuepress/dist
+.docusaurus/
+.parcel-cache
+

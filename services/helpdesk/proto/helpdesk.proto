@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package helpdesk.service;
+option go_package = "github.com/dearteno/helpdesk-system/services/helpdesk/proto";
+
+import "proto/common.proto";
+
+// Helpdesk service definition
+service HelpdeskService {
+  rpc CreateHelpdesk(CreateHelpdeskRequest) returns (HelpdeskResponse);
+  rpc GetHelpdesk(GetHelpdeskRequest) returns (HelpdeskResponse);
+  rpc UpdateHelpdesk(UpdateHelpdeskRequest) returns (HelpdeskResponse);
+  rpc DeleteHelpdesk(DeleteHelpdeskRequest) returns (helpdesk.common.Status);
+  rpc ListHelpdesks(ListHelpdesksRequest) returns (ListHelpdesksResponse);
+  rpc SearchHelpdesk(SearchHelpdeskRequest) returns (ListHelpdesksResponse);
+}
+
+// Helpdesk entity based on UML diagram
+message Helpdesk {
+  string id = 1;
+  string ticket_id = 2;
+  string name = 3;
+  string number = 4;
+  string type = 5;
+  string description = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+// Request and response messages
+message CreateHelpdeskRequest {
+  string ticket_id = 1;
+  string name = 2;
+  string number = 3;
+  string type = 4;
+  string description = 5;
+}
+
+message GetHelpdeskRequest {
+  string id = 1;
+}
+
+message UpdateHelpdeskRequest {
+  string id = 1;
+  string ticket_id = 2;
+  string name = 3;
+  string number = 4;
+  string type = 5;
+  string description = 6;
+}
+
+message DeleteHelpdeskRequest {
+  string id = 1;
+}
+
+message HelpdeskResponse {
+  Helpdesk helpdesk = 1;
+  helpdesk.common.Status status = 2;
+}
+
+message ListHelpdesksRequest {
+  helpdesk.common.PaginationRequest pagination = 1;
+}
+
+message ListHelpdesksResponse {
+  repeated Helpdesk helpdesks = 1;
+  helpdesk.common.Pagination pagination = 2;
+  helpdesk.common.Status status = 3;
+}
+
+message SearchHelpdeskRequest {
+  string query = 1;
+  helpdesk.common.PaginationRequest pagination = 2;
+}

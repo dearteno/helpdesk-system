@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package ticket.service;
+option go_package = "github.com/dearteno/helpdesk-system/services/ticket/proto";
+
+import "proto/common.proto";
+
+// Ticket service definition based on UML
+service TicketService {
+  rpc CreateTicket(CreateTicketRequest) returns (TicketResponse);
+  rpc GetTicket(GetTicketRequest) returns (TicketResponse);
+  rpc UpdateTicket(UpdateTicketRequest) returns (TicketResponse);
+  rpc DeleteTicket(DeleteTicketRequest) returns (helpdesk.common.Status);
+  rpc ListTickets(ListTicketsRequest) returns (ListTicketsResponse);
+  rpc SearchTicket(SearchTicketRequest) returns (ListTicketsResponse);
+}
+
+// Ticket entity based on UML diagram
+message Ticket {
+  string id = 1;
+  string customer_id = 2;
+  string type = 3;
+  string date = 4;
+  string description = 5;
+  string status = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+// Request and response messages
+message CreateTicketRequest {
+  string customer_id = 1;
+  string type = 2;
+  string description = 3;
+}
+
+message GetTicketRequest {
+  string id = 1;
+}
+
+message UpdateTicketRequest {
+  string id = 1;
+  string customer_id = 2;
+  string type = 3;
+  string description = 4;
+  string status = 5;
+}
+
+message DeleteTicketRequest {
+  string id = 1;
+}
+
+message TicketResponse {
+  Ticket ticket = 1;
+  helpdesk.common.Status status = 2;
+}
+
+message ListTicketsRequest {
+  helpdesk.common.PaginationRequest pagination = 1;
+  string customer_id = 2;
+  string status = 3;
+}
+
+message ListTicketsResponse {
+  repeated Ticket tickets = 1;
+  helpdesk.common.Pagination pagination = 2;
+  helpdesk.common.Status status = 3;
+}
+
+message SearchTicketRequest {
+  string query = 1;
+  helpdesk.common.PaginationRequest pagination = 2;
+}

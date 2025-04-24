@@ -1,0 +1,56 @@
+# Dependencies
+node_modules
+.pnpm-store/
+.pnpm-debug.log*
+
+# Testing
+test-results
+playwright-report/
+test-results/
+/tests-examples/
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+dist/
+.vercel_build_output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Paraglide
+src/lib/paraglide
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Coverage
+coverage/
+coverage-report/
+.nyc_output/
+
+# Storybook
+*storybook.log

@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package network.service;
+option go_package = "github.com/dearteno/helpdesk-system/services/network/proto";
+
+import "proto/common.proto";
+
+// Network service definition based on UML
+service NetworkService {
+  rpc CreateNetwork(CreateNetworkRequest) returns (NetworkResponse);
+  rpc GetNetwork(GetNetworkRequest) returns (NetworkResponse);
+  rpc UpdateNetwork(UpdateNetworkRequest) returns (NetworkResponse);
+  rpc DeleteNetwork(DeleteNetworkRequest) returns (helpdesk.common.Status);
+  rpc ListNetworks(ListNetworksRequest) returns (ListNetworksResponse);
+  rpc SearchNetworks(SearchNetworksRequest) returns (ListNetworksResponse);
+}
+
+// Network entity based on UML diagram
+message Network {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string description = 4;
+  string status = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+// Request and response messages
+message CreateNetworkRequest {
+  string name = 1;
+  string type = 2;
+  string description = 3;
+}
+
+message GetNetworkRequest {
+  string id = 1;
+}
+
+message UpdateNetworkRequest {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string description = 4;
+  string status = 5;
+}
+
+message DeleteNetworkRequest {
+  string id = 1;
+}
+
+message NetworkResponse {
+  Network network = 1;
+  helpdesk.common.Status status = 2;
+}
+
+message ListNetworksRequest {
+  helpdesk.common.PaginationRequest pagination = 1;
+  string type = 2;
+  string status = 3;
+}
+
+message ListNetworksResponse {
+  repeated Network networks = 1;
+  helpdesk.common.Pagination pagination = 2;
+  helpdesk.common.Status status = 3;
+}
+
+message SearchNetworksRequest {
+  string query = 1;
+  helpdesk.common.PaginationRequest pagination = 2;
+}
