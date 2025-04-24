@@ -1,10 +1,12 @@
 package middleware
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -98,18 +100,36 @@ func verifyToken(token, supabaseURL, supabaseKey string) (*SupabaseUser, error) 
 	// In a real implementation, you would make an HTTP request to Supabase Auth API
 	// to validate the token and get user information
 
-	// For development/example purposes, we'll simulate a successful verification
 	if token == "" {
 		return nil, errors.New("invalid token")
 	}
 
-	// This is a placeholder. In production, actually verify with Supabase
-	// by calling their auth API
-	user := &SupabaseUser{
-		ID:    "simulated-user-id",
-		Email: "user@example.com",
-		Role:  "user",
+	// Make an HTTP request to Supabase Auth API to verify the token
+	client := &http.Client{Timeout: 10 * time.Second}
+	req, err := http.NewRequest("GET", supabaseURL+"/auth/v1/user", nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	return user, nil
+	// Add the necessary headers
+	req.Header.Add("Authorization", "Bearer "+token)
+	req.Header.Add("apikey", supabaseKey)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to verify token: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, errors.New("invalid or expired token")
+	}
+
+	// Parse the user data from the response
+	var userData SupabaseUser
+	if err := json.NewDecoder(resp.Body).Decode(&userData); err != nil {
+		return nil, fmt.Errorf("failed to parse user data: %w", err)
+	}
+
+	return &userData, nil
 }
